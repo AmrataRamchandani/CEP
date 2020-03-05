@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <link rel="icon" type="image/png" sizes="310x310" href="../static/images/fav1.png">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Contrast Enhancement</title>
+      <!-- Included Bootstrap CSS Files -->
+      <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css"  >
+      <link rel="stylesheet" type="text/css" href="../static/css/jquery.carousel.fullscreen.css" >
+      <script src="../static/js/jquery 2.2.4.min.js"></script>
+      <script src="../static/js/bootstrap.min.js"></script>
+      <!-- Just include this Js file -->
+      <script src="../static/js/jquery.carousel.fullscreen.js"></script>
+      <style>
+         /* Fonts */
+         @font-face {
+         font-family: 'Fredericka the Great';
+         font-style: normal;
+         font-weight: 400;
+         src: url('../static/fonts/FrederickatheGreat-Regular.ttf');
+         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+         }
+         .nav>li>a {
+         border: 4px solid white;
+         background-color: transparent;
+         color:white;
+         }
+         .navbar,.navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover {
+         background-color:black;
+         border-color:transparent;
+         height:20%;
+         }
+         .navbar-inverse .navbar-brand ,.navbar-inverse .navbar-nav>li>a {
+         color:#fff;
+         }
+         .footer{
+         color:white;
+         margin-left:80%;
+         }
+      </style>
+   </head>
+   <body>
+      <nav class="navbar navbar-inverse navbar-fixed-bottom">
+         <div class="container-fluid">
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle" onclick="toggle_visibility('brand')"
+                  data-toggle="collapse" data-target="#myNavbar" >
+               <span class="icon-bar" >
+               </span>
+               <span class="icon-bar">
+               </span>
+               <span class="icon-bar">
+               </span>
+               </button>
+               <a class="navbar-brand " href="#" id="brand" style="margin-top:3%;font-family: 'Fredericka the Great', cursive;font-size: 100px;">
+               Contrast Enhancement
+               </a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+               <ul class="nav navbar-nav navbar-right"
+                  style="font-family:'Cormorant Upright', serif;font-size: 20px; font-weight:500">
+                  <li>
+                     <a href="/enhance">Enhance
+                     </a>
+                  </li>
+                  <li>
+                     <a href="/" style="margin-top:60%;">Team
+                     </a>
+                  </li>
+               </ul>
+            </div>
+            <p class="footer">Handcrafted with <span class="glyphicon glyphicon-heart" style="color:red"></span> yours truly</p>
+         </div>
+      </nav>
+      <!-- Bootstrap Carousel -->
+      <div id="carousel-example-generic" class="carousel carousal-fade" data-ride="carousel">
+         <!-- Wrapper for slides -->
+         <div class="carousel-inner">
+            <div class="item active">
+               <img src="../static/images/1.jpg" alt="" />
+            </div>
+            <div class="item" >
+               <img src="../static/images/2.jpg" alt="" />
+            </div>
+         </div>
+      </div>
+      <!-- Bootstrap Carousel -->
+      <style>
+         div#preloader { position: fixed; left: 0; top: 0; z-index: 999; width: 100%; height: 100%; overflow: visible; background: #333 url('http://files.mimoymima.com/images/loading.gif') no-repeat center center; }
+         /*
+         Bootstrap Carousel Fade Transition (for Bootstrap 3.3.x)
+         CSS from:       http://codepen.io/transportedman/pen/NPWRGq
+         and:            http://stackoverflow.com/questions/18548731/bootstrap-3-carousel-fading-to-new-slide-instead-of-sliding-to-new-slide
+         Inspired from:  http://codepen.io/Rowno/pen/Afykb
+         */
+         .carousel-fade .carousel-inner .item {
+         opacity: 0;
+         }
+         .carousel-inner>.item {
+         transition: transform 5.9s ease-out;
+         }
+         .carousel-fade .carousel-inner .active {
+         opacity: 1;
+         }
+         .carousel-fade .carousel-inner .active.left,
+         .carousel-fade .carousel-inner .active.right {
+         left: 0;
+         opacity: 0;
+         z-index: 1;
+         }
+         .carousel-fade .carousel-inner .next.left,
+         .carousel-fade .carousel-inner .prev.right {
+         opacity: 1;
+         }
+         .carousel-fade .carousel-control {
+         z-index: 2;
+         }
+         @media all and (transform-3d), (-webkit-transform-3d) {
+         .carousel-fade .carousel-inner > .item.next,
+         .carousel-fade .carousel-inner > .item.active.right {
+         opacity: 0;
+         -webkit-transform: translate3d(0, 0, 0);
+         transform: translate3d(0, 0, 0);
+         }
+         .carousel-fade .carousel-inner > .item.prev,
+         .carousel-fade .carousel-inner > .item.active.left {
+         opacity: 0;
+         -webkit-transform: translate3d(0, 0, 0);
+         transform: translate3d(0, 0, 0);
+         }
+         .carousel-fade .carousel-inner > .item.next.left,
+         .carousel-fade .carousel-inner > .item.prev.right,
+         .carousel-fade .carousel-inner > .item.active {
+         opacity: 1;
+         -webkit-transform: translate3d(0, 0, 0);
+         transform: translate3d(0, 0, 0);
+         }
+         }
+      </style>
+   </body>
+</html>

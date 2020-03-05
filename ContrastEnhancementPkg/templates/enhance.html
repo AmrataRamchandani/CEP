@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <link rel="icon" type="image/png" sizes="310x310" href="../static/images/fav1.png">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>Contrast Enhancement
+      </title>
+      <!-- Included Bootstrap CSS Files -->
+      <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css"  >
+      <script src="../static/js/jquery 2.2.4.min.js"></script>
+      <script src="../static/js/bootstrap.min.js"></script>
+   </head>
+   <style>
+      #header{
+      border-style: solid;
+      border-width: 0 2px 0px 0;
+      background-color: #027d7d;
+      height:100vh;
+      padding-left: 3%;
+      margin-right:0
+      }
+      .title{
+      font-size: 50px;
+      font-family:"Courier New", Courier, monospace;
+      color:#333
+      }
+      .sub{
+      font-size:50px;
+      color:#000;
+      border-style: solid;
+      border-width: 0 0px 1px 0;
+      border-color: #000;
+      }
+      .footer {
+      position: fixed;
+      right: 10px;
+      bottom: 0;
+      font-size: 15px;
+      color:white;
+      }
+      #secondhalf{
+      height:100vh;
+      background-color:#000;
+      color: white;
+      }
+      #performcontent{
+      display: none;
+      }
+      .imgdisplay{
+      height:350px;
+      width:350px;
+      border:5px;
+      border-style: solid;
+      border-color:#525252;
+      }
+      .histdisplay{
+      height:400px;
+      width:370px;
+      border:5px;
+      border-style: solid;
+      border-color:#525252;
+      }
+      #radioBtn .notActive{
+      color: red;
+      background-color: #fff;
+      border-color:#000
+      }
+      #radioBtn .active{
+      border-color:#000
+      }
+      h4{color:red}
+      .btn-primary.active, .btn-primary.active:hover{
+      color: #fff;
+      background-color: red;}
+      .modal-dialog{
+      position: relative;
+      display: table; 
+      overflow-y: auto;
+      overflow-x: auto;
+      width: auto;
+      min-width: 300px;
+      }
+   </style>
+   <body>
+      <div class=row >
+         <div  class="col-lg-5" id=header>
+            <!-- Heading -->
+            <div class=row >
+               <p class="title"><a href="/about" STYLE="text-decoration:none;color : #343535;"> Contrast </a><img src="static/images/low.png" height="100" width="150"></img></p>
+               <p class="sub">ENHANCEMENT <img src="static/images/high.png" height="100" width="115"></img></p>
+            </div>
+            <br>
+            <div class="row" style="font-size:21px;color:#000;margin-left:25%" id="perform">
+               <form id="upload-form" action="{{url_for('upload')}}"method="POST" onsubmit="return checkform()" enctype="multipart/form-data">
+                  <label >Input Image</label>
+                  <input id="file-picker" type="file" name="file" accept="image/*" required>
+                  <p id="msg" style="font-size:18px;font-weight: bold;color:red">Supported file formats: jpeg/jpg/png </p>
+                  <p id="msg" style="font-size:18px;color:red"></p>
+                  <br>
+                  <script>
+                  function checkform() {
+                      var input = document.getElementById('file-picker');
+                      for (var i = 0; i < input.files.length; i++) {
+                       var ext = input.files[i].name.substring(input.files[i].name.lastIndexOf('.') + 1).toLowerCase()
+                       if ((ext == 'jpg') || (ext == 'png') || (ext == 'jpeg')) {}
+                       else {
+                         $("#msg").text("Submitted file format is not supported")
+                         document.getElementById("file-picker").value = "";
+                         return false;
+                       }
+                      }
+                    }
+                  </script>
+                  <label >Choose Enhancement</label><br>
+                  <input type="radio" name="chooseenhancement" value="linear" required>Linear
+                  </input><span class="glyphicon glyphicon-book"
+                     style="margin-left: 0%;font-size: 20px;color:black"
+                     data-toggle="modal" data-target="#LinearContentModal"></span>
+                  <!-- Content Modal -->
+                  <div class="modal fade" id="LinearContentModal" role="dialog">
+                     <div class="modal-dialog modal-lg">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                           <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title" style="font-size: 40px;">Linear</h4>
+                           </div>
+                           <div class="modal-body">
+                              <ul style="font-size:26px;">
+                                 <li>Maps the intensities of input image to new values such that the data is stretched to the whole range.</li>
+                                 <li>If we are considering an eight-bit image.The lowest gray level in the image is mapped to zero and the highest gray level value in the image to 255,
+                                    and all the other rest of the gray levels remapped linearly between zero and 255
+                                 </li>
+                                 <li>The linear operation is defined by : </li>
+                              </ul>
+                              <img class="img-responsive" src="static/images/lincontent.png" >
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <br>
+                  <input type="radio" name="chooseenhancement" value="stdev" id=std >Standard Deviation</input>
+                  <span class="glyphicon glyphicon-book"
+                     style="margin-left: 0%;font-size: 20px;color:black"
+                     data-toggle="modal" data-target="#StdevContentModal"></span>
+                  <!-- Content Modal -->
+                  <div class="modal fade" id="StdevContentModal" role="dialog">
+                     <div class="modal-dialog modal-lg">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                           <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title" style="font-size: 40px;">Standard Deviation</h4>
+                           </div>
+                           <div class="modal-body">
+                              <ul style="font-size:26px;">
+                                 <li> Trims all pixels that have a DN beyond the range as defined by the standard deviation from the mean values.</li>
+                                 <li>It then performs linear stretch for remaining pixels.</li>
+                                 <li>Based on Gaussian normal distribution concept</li>
+                              </ul>
+                              <img class="img-responsive" src="static/images/stdevcontent1.png" >
+                              <ul style="font-size:26px;">
+                                 <li>We exclude certain pixels from the histogram by specifying the range,
+                                    i.e. min and max.
+                                 </li>
+                                 <li>Example , 68% histogram included within 1 standard deviation, 95.4% histogram included within 2 standard deviation and so on.</li>
+                                 <li>The image is then stretched within the range to get an enhanced image.</li>
+                              </ul>
+                              <img class="img-responsive" src="static/images/stdevcontent2.png" >
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <br>
+                  <label class="brk"  style="font-weight:100;font-size:15px">K value</label>
+                  <input class="brk" name=k type="number" id=k min="1" step="0.1" max="5" value="1.5"
+                     style="font-size:15px;"/>
+                  <br class="brk">
+                  <script>
+                     $(document).ready(function() {
+                         $(".brk").hide()
+                         $(".bre").hide()
+                         $('input[type="radio"]').click(function() {
+                         if($(this).attr('id') == 'std') {
+                         $(".brk").show()
+                         }
+                         else {
+                         $(".brk").hide()
+                         }
+
+                         if($(this).attr('id') == 'exp') {
+                         $(".bre").show()
+                         }
+                         else {
+                         $(".bre").hide()
+                         }
+                       });
+                     });
+                  </script>
+                  <input type="radio" name="chooseenhancement" value="histeq" >Histogram Equalization</input>
+                  <span class="glyphicon glyphicon-book"
+                     style="margin-left: 0%;font-size: 20px;color:black"
+                     data-toggle="modal" data-target="#HistEqContentModal"></span>
+                  <!-- Content Modal -->
+                  <div class="modal fade" id="HistEqContentModal" role="dialog">
+                     <div class="modal-dialog modal-lg">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                           <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title" style="font-size: 40px;">Histogram Equalization</h4>
+                           </div>
+                           <div class="modal-body">
+                              <ul style="font-size:26px;">
+                                 <li>Histogram is a graphical representation of the intensity distribution of an image.
+                                 </li>
+                                 <li>Technically, it represents the number of pixels for each intensity value considered.
+                                 </li>
+                              </ul>
+                              <img class="img-responsive" src="static/images/histeqcontent1.png" >
+                              <ul style="font-size:26px;">
+                                 <li>HISTOGRAM EQUALIZATION is the technique for adjusting image intensities to enhance contrast</li>
+                                 <li>Ideally,</li>
+                              </ul>
+                              <img class="img-responsive" src="static/images/histeqcontent21.png" >
+                              <ul style="font-size:26px;">
+                                 <li>In practice, we can only achieve approximation of it</li>
+                              </ul>
+                              <img class="img-responsive" src="static/images/histeqcontent22.png" >
+                              <ul style="font-size:26px;">
+                                 <li>Histogram equalization optimizes the utilization of the available display range
+                                 </li>
+                                 <li>Number of distinct non-zero gray levels in the output reduced
+                                 </li>
+                                 <li>
+                                    Merges gray levels having very few pixels and separates those levels that are heavily populated.
+                                 </li>
+                              </ul>
+                              <img class="img-responsive" src="static/images/histeqcontent3.png" >
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <br>
+                  <input type="radio" name="chooseenhancement" value="log" >Logarithmic</input>
+                  <span class="glyphicon glyphicon-book"
+                     style="margin-left: 0%;font-size: 20px;color:black"
+                     data-toggle="modal" data-target="#LogContentModal"></span>
+                  <!-- Content Modal -->
+                  <div class="modal fade" id="LogContentModal" role="dialog">
+                     <div class="modal-dialog modal-lg">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                           <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title" style="font-size: 40px;">Logarithmic</h4>
+                           </div>
+                           <div class="modal-body">
+                              <ul style="font-size:26px;">
+                                 <li> The log transformation maps a low input gray level values into wider range of output values.</li>
+                                 <li>  S=c*log(1+r)</li>
+                              </ul>
+                              <img class="img-responsive" src="static/images/logcontent.png" >
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <br>
+                  <input type="radio" name="chooseenhancement" value="exp" id=exp>Exponential</input>
+                  <span class="glyphicon glyphicon-book"
+                     style="margin-left: 0%;font-size: 20px;color:black"
+                     data-toggle="modal" data-target="#ExpContentModal"></span>
+                  <!-- Content Modal -->
+                  <div class="modal fade" id="ExpContentModal" role="dialog">
+                     <div class="modal-dialog modal-lg">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                           <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title" style="font-size: 40px;">Exponential</h4>
+                           </div>
+                           <div class="modal-body">
+                              <ul style="font-size:26px;">
+                                 <li>Maps a narrow range of dark input values into wider range of output values and vice-versa.</li>
+                                 <li>S=c*rλ</li>
+                                 <li> Depending upon the value of gamma and constant
+                                    transformation will be done according to it.
+                                 </li>
+                              </ul>
+                              <img class="img-responsive" src="static/images/expcontent1.png" >
+                              <img class="img-responsive" src="static/images/expcontent2.png" >
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <br>
+                  <label class="bre"  style="font-weight:100;font-size:15px">Gamma value </label>
+                  <input class="bre" name=g type="number" id=g min="2" step="0.5" max="5" value="3"
+                     style="font-size:15px;"/>
+                  <br class="bre">
+                  <br>
+                  <input type="submit" value="Enhance !" id="enhance" >
+               </form>
+            </div>
+         </div>
+         <div  class="col-lg-7" id="secondhalf">
+            <div class="row">
+               <div id="radioBtn" class="btn-group" style="margin-right:2%;margin-top:2%;float:right;">
+                  <a id="imgbutton" class="btn btn-primary btn-md active" data-toggle="chooseaction" data-title="img"
+                     >Image</a>
+                  <a id="histbutton" class="btn btn-primary btn-md notActive" data-toggle="chooseaction" data-title="hist">Histogram</a>
+               </div>
+               <input type="hidden" name="chooseaction" id="chooseaction">
+            </div>
+            {% if enhancement%}
+            <p style="font-size:60px">{{enhancement}}
+            <p>
+            <div class="row" id="img">
+               <div style="margin-left:2.5%;margin-top:2%;float:left;">
+                  <img src={{inpimg}} class=imgdisplay>
+                  <center>
+                     <h4 style="font-size: 20px;">Input Image</h4>
+                  </center>
+               </div>
+               <div style="margin-left:2%;margin-top:2%;float:left; ">
+                  <img src={{outimg}} class=imgdisplay>
+                  <center>
+                     <h4 style="font-size: 20px;">Enhanced Image
+                        <a href={{outimg}} download>
+                        <span class="glyphicon glyphicon-download-alt"
+                           style="margin-left: 3%;font-size: 20px;color:white">
+                        </a>
+                        <span class="glyphicon glyphicon-zoom-in"
+                           style="margin-left: 5%;font-size: 20px;color:white"
+                           data-toggle="modal" data-target="#ImageModal">
+                     </h4>
+                  </center>
+               </div>
+               <!-- Image Modal -->
+               <div class="modal fade" id="ImageModal" role="dialog">
+                  <div class="modal-dialog modal-lg">
+                     <!-- Modal content-->
+                     <div class="modal-content">
+                        <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal">&times;</button>
+                           <h4 class="modal-title" style="font-size: 40px;">Enhanced Image</h4>
+                        </div>
+                        <div class="modal-body">
+                           <img class="img-responsive" src={{outimg}} >
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row" style="display:none" id="hist">
+               <div style="float:left;margin-left:1%;">
+                  <img src={{inphist}} class=histdisplay>
+                  <center>
+                     <h4 style="font-size: 25px;">Input Image Histogram</h4>
+                  </center>
+               </div>
+               <div style="float:left;margin-left:1%;">
+                  <img src={{outhist}} class=histdisplay>
+                  <center>
+                     <h4 style="font-size: 25px;">Enhanced Image Histogram</h4>
+                  </center>
+               </div>
+            </div>
+            {% else %}
+            <p style="font-size:60px">Linear
+            <p>
+            <div class="row" id="img">
+               <div style="margin-left:2.5%;margin-top:5%;float:left;">
+                  <img src="static/images/demolinearinpimg.png" class=imgdisplay>
+                  <center>
+                     <h4 style="font-size: 25px;">Input Image</h4>
+                  </center>
+               </div>
+               <div style="margin-left:2%;margin-top:5%;float:left; ">
+                  <img src="static/images/demolinearoutimg.jpg" class=imgdisplay>
+                  <center>
+                     <h4 style="font-size: 25px;">Enhanced Image
+                     </h4>
+                  </center>
+               </div>
+            </div>
+            <div class="row" style="display:none" id="hist">
+               <div style="float:left;margin-left:1%;">
+                  <img src="static/images/demolinearinphist.jpg" class=histdisplay>
+                  <center>
+                     <h4 style="font-size: 25px;">Input Image Histogram</h4>
+                  </center>
+               </div>
+               <div style="float:left;margin-left:1%;">
+                  <img src="static/images/demolinearouthist.jpg" class=histdisplay>
+                  <center>
+                     <h4 style="font-size: 25px;">Enhanced Image Histogram</h4>
+                  </center>
+               </div>
+            </div>
+            {% endif %}
+            <p class="footer">Handcrafted with <span class="glyphicon glyphicon-heart" style="color:red"></span> yours truly</p>
+         </div>
+      </div>
+   </body>
+</html>
+<script>
+$('#radioBtn a').on('click', function () {
+
+  var sel = $(this).data('title');
+  var tog = $(this).data('toggle');
+  $('#' + tog).prop('value', sel);
+
+  $('a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
+  $('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
+
+  if ($('input#chooseaction').val() == 'img') {
+
+    $('#img').show();
+    $('#hist').hide();
+  }
+  if ($('input#chooseaction').val() == 'hist') {
+
+    $('#hist').show();
+    $('#img').hide();
+  }
+
+});
+</script>
